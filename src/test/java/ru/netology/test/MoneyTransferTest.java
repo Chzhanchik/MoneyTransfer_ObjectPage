@@ -22,20 +22,20 @@ public class MoneyTransferTest {
     }
 
     @Test
-    public void shouldTransferMoneyBetweenOwnCards1() {
+    public void shouldTransferMoneyFromSecondCardToFirst() {
         val dashboardPage = new DashboardPage();
         int balanceFirstCard = dashboardPage.getFirstCardBalance();
         int balanceSecondCard = dashboardPage.getSecondCardBalance();
         val transferPage = dashboardPage.firstCardButton();
         val infoCard = DataHelper.getSecondCardNumber();
-        String sum = "300";
+        String sum = "10000";
         transferPage.transferForm(sum, infoCard);
         assertEquals(balanceFirstCard + Integer.parseInt(sum), dashboardPage.getFirstCardBalance());
         assertEquals(balanceSecondCard - Integer.parseInt(sum), dashboardPage.getSecondCardBalance());
     }
 
     @Test
-    public void shouldTransferMoneyBetweenOwnCards2() {
+    public void shouldTransferMoneyFromFirstCardToSecond() {
         val dashboardPage = new DashboardPage();
         int balanceFirstCard = dashboardPage.getFirstCardBalance();
         int balanceSecondCard = dashboardPage.getSecondCardBalance();
@@ -48,18 +48,11 @@ public class MoneyTransferTest {
     }
 
     @Test
-    public void shouldCancellationOfMoneyTransfer() {
-        val dashboardPage = new DashboardPage();
-        val transferPage = dashboardPage.firstCardButton();
-        transferPage.cancelButton();
-    }
-
-    @Test
-    public void shouldTransferMoneyBetweenOwnCardsError() {
+    public void shouldTransferMoneyUpperLimitAndGetError() {
         val dashboardPage = new DashboardPage();
         val transferPage = dashboardPage.secondCardButton();
         val infoCard = DataHelper.getFirstCardNumber();
-        String sum = "11000";
+        String sum = "90000";
         transferPage.transferForm(sum, infoCard);
         transferPage.getError();
     }
